@@ -1,0 +1,5 @@
+c:\users\swornim nepal\documents\visual studio 2012\Projects\DBPasswordSaver\BllUser\bin\Debug\BllUser.dll
+c:\users\swornim nepal\documents\visual studio 2012\Projects\DBPasswordSaver\BllUser\bin\Debug\BllUser.pdb
+c:\users\swornim nepal\documents\visual studio 2012\Projects\DBPasswordSaver\BllUser\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
+c:\users\swornim nepal\documents\visual studio 2012\Projects\DBPasswordSaver\BllUser\obj\Debug\BllUser.dll
+c:\users\swornim nepal\documents\visual studio 2012\Projects\DBPasswordSaver\BllUser\obj\Debug\BllUser.pdb
