@@ -64,6 +64,22 @@ namespace BusinessLayer
         
         }
 
+        public DataTable FetchCount()
+        {
+
+
+
+            SqlConnection con = new SqlConnection("Data Source=SWORNIMPC; Integrated Security=True; Initial Catalog=PasswordSaveDB");
+            string sql = "select count(AccountId) from tbl_Password";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+
+        }
+
         public DataTable SearchUsersFromDataTable(string platform) {
             SqlConnection con = new SqlConnection("Data Source=SWORNIMPC; Integrated Security=True; Initial Catalog=PasswordSaveDB");
             string sql = "select* from tbl_Password where PlatformName=@platform";
@@ -77,6 +93,22 @@ namespace BusinessLayer
         
         
         }
+        public DataTable SearchUsersFromDataTablewithEmail(string email)
+        {
+            SqlConnection con = new SqlConnection("Data Source=SWORNIMPC; Integrated Security=True; Initial Catalog=PasswordSaveDB");
+            string sql = "select* from tbl_Password where Email=@email";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@email", email);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+
+
+        }
+      
+        
 
         public DataTable SearchUserSuggestions(string character) {
             SqlConnection con = new SqlConnection("Data Source=SWORNIMPC; Integrated Security=True; Initial Catalog=PasswordSaveDB");

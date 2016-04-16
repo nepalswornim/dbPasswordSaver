@@ -50,6 +50,8 @@ namespace DBPasswordSaver
             btnSave.Text = "Save";
             txtPlatform.Focus();
             btnDelete.Visible = false;
+            count();           
+
 
 
         }
@@ -60,15 +62,34 @@ namespace DBPasswordSaver
             if (btnSave.Text != "Update")
             {
 
-
-                int i = bll.SavePassword(txtPlatform.Text, txtEmail.Text, txtUsername.Text, txtPassword.Text, cboConfidentiality.Text);
-                if (i > 0)
+                DataTable dt = bll.SearchUsersFromDataTable(txtPlatform.Text);
+                DataTable dt1 = bll.SearchUsersFromDataTablewithEmail(txtEmail.Text);
+                if (dt.Rows.Count > 0)
                 {
-                    MessageBox.Show("Saved Successfully");
-                    LoadGrid();
+                    MessageBox.Show("Platform already exists");
                     Clear();
-
+                    LoadGrid();
                 }
+                else if (dt1.Rows.Count > 0)  
+                
+                   
+                    {
+                        MessageBox.Show("Email already exists");
+                        Clear();
+                        LoadGrid();
+                    }
+                    else
+                    {
+                        int i = bll.SavePassword(txtPlatform.Text, txtEmail.Text, txtUsername.Text, txtPassword.Text, cboConfidentiality.Text);
+                        if (i > 0)
+                        {
+                            MessageBox.Show("Saved Successfully");
+                            LoadGrid();
+                            Clear();
+
+                        }
+                    }
+                
             }
             else
             {
@@ -94,11 +115,16 @@ namespace DBPasswordSaver
             pwdDisplay.DataSource = dt;
 
         }
+        public void count() { 
+            DataTable dt = bll.FetchCount();
+           lblTotalusers.Text ="Total Users: "+ dt.Rows[0][0].ToString();
+
+        
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DataTable dt = bll.UserCount();
-            lblTotalusers.Text = "Total Accounts: " + dt.Rows.Count.ToString();
+            count();
             LoadGrid();
             btnDelete.Visible = false;
 
@@ -149,7 +175,7 @@ namespace DBPasswordSaver
 
             btnSave.Text = "Update";
             btnDelete.Visible = true;
-
+         
 
         }
 
@@ -165,9 +191,21 @@ namespace DBPasswordSaver
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            int i = bll.DeleteUser(id);
-            LoadGrid();
-            Clear();
+            if (MessageBox.Show("Are you Sure ??", "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                int i = bll.DeleteUser(id);
+                if (i > 0)
+                {
+                    MessageBox.Show("Deleted Successfully");
+                    LoadGrid();
+                    Clear();
+                }
+            }
+            else
+            {
+                Clear();
+            }
+
         }
     }
 }
