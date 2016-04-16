@@ -113,5 +113,31 @@ namespace BusinessLayer
 
         
         }
+
+        public DataTable UserCount()
+        {
+
+
+
+            SqlConnection con = new SqlConnection("Data Source=SWORNIMPC; Integrated Security=True; Initial Catalog=PasswordSaveDB");
+            string sql = "select* from tbl_Password";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+
+        }
+
+        public int DeleteUser(int userid) {
+            SqlConnection con = new SqlConnection("Data Source=SWORNIMPC; Integrated Security=True;Initial Catalog=PasswordSaveDB");
+            string sql = "delete from tbl_Password where AccountId=@userid";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@userid", userid);
+            con.Open();
+            return cmd.ExecuteNonQuery();
+            con.Close();
+        }
     }
 }

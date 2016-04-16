@@ -31,6 +31,7 @@ namespace DBPasswordSaver
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            btnDelete.Visible = false;
             Clear();
 
         }
@@ -48,6 +49,7 @@ namespace DBPasswordSaver
             txtUsername.Text = "";
             btnSave.Text = "Save";
             txtPlatform.Focus();
+            btnDelete.Visible = false;
 
 
         }
@@ -95,8 +97,10 @@ namespace DBPasswordSaver
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            DataTable dt = bll.UserCount();
+            lblTotalusers.Text = "Total Accounts: " + dt.Rows.Count.ToString();
             LoadGrid();
+            btnDelete.Visible = false;
 
         }
 
@@ -131,6 +135,7 @@ namespace DBPasswordSaver
 
         }
         int id = 0;
+        
 
         private void pwdDisplay_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -139,12 +144,30 @@ namespace DBPasswordSaver
             txtUsername.Text = pwdDisplay.CurrentRow.Cells[3].Value.ToString();
             txtPassword.Text = pwdDisplay.CurrentRow.Cells[4].Value.ToString();
             cboConfidentiality.Text = pwdDisplay.CurrentRow.Cells[5].Value.ToString();
-
             id = Convert.ToInt32(pwdDisplay.CurrentRow.Cells[0].Value);
+           
 
             btnSave.Text = "Update";
+            btnDelete.Visible = true;
 
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int i = bll.DeleteUser(id);
+            LoadGrid();
+            Clear();
         }
     }
 }
